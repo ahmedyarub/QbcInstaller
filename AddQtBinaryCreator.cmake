@@ -5,16 +5,16 @@
 ## CMAKE INPUT
 #
 #   - QBC_DEPENDS_TARGET : Target for which it will create an installer
-#   - QBC_ADDITIONNAL_DEPENDS
+#   - QBC_ADDITIONAL_DEPENDS
 #   - QBC_PROJECT_NAME : Name of QtBinaryCreator project in build system, default is QtBinaryCreator
-#   - QBC_ALL : Does the project depends on the make all
+#   - QBC_ALL : Does the project depend on the make all
 #   - QBC_NAME : Name of the product for which the installer will be created
 #   - QBC_VERSION : Product version
 #   - QBC_TITLE : Installer Title (for example Install Product)
 #   - QBC_PUBLISHER : Product publisher
 #   - QBC_PRODUCT_URL : Product URL
 #   - QBC_ICON_PATH : Icon path (it will be copied)
-#   - QBC_START_MENU : Start Menu name, this is optionnal it will be set by default to publisher
+#   - QBC_START_MENU : Start Menu name, this is optional it will be set by default to publisher
 #   - QT_INSTALLER_FRAMEWORK_DIR : Path to binary creator, can have default values for windows for example where binary is in repository
 #   - QBC_RELEASE_DATE : Release Date, will be set to now if not specified
 #   - QBC_VERBOSE : Print verbose
@@ -108,7 +108,7 @@ function(add_qt_binary_creator TARGET)
     endif()
 
     if(ARGQBC_DEPENDS)
-        set(QBC_ADDITIONNAL_DEPENDS ${ARGQBC_DEPENDS})
+        set(QBC_ADDITIONAL_DEPENDS ${ARGQBC_DEPENDS})
     endif() # ARGQBC_DEPENDS
 
     if(ARGQBC_RUN_PROGRAM)
@@ -255,7 +255,7 @@ function(add_qt_binary_creator TARGET)
 
     add_custom_target(${QBC_INSTALLER_TARGET_NAME}
         ${QBC_ALL}
-        DEPENDS ${QBC_DEPENDS_TARGET} ${QBC_ADDITIONNAL_DEPENDS}
+        DEPENDS ${QBC_DEPENDS_TARGET} ${QBC_ADDITIONAL_DEPENDS}
         COMMAND ${CMAKE_COMMAND} -E copy_directory $<TARGET_FILE_DIR:${QBC_DEPENDS_TARGET}> ${QBC_BUILD_DIR}/packages/${QBC_PACKAGE}/data
         COMMAND ${QT_INSTALLER_FRAMEWORK_DIR}/binarycreator
             -c ${QBC_BUILD_DIR}/config/config.xml
